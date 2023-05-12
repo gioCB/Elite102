@@ -1,21 +1,33 @@
 # Elite102
-mport mysql.connector
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="@GankeMiles12"
-)
+import mysql.connector
+from mysql.connector import Error
 
-print(mydb)
 
-mycursor = mydb.cursor()
+def connect():
+    """ Connect to MySQL database """
+    conn = None
+    try:
+        conn = mysql.connector.connect(host='localhost',
+                                       database='Elite 102',
+                                       user='root',
+                                       password='@GankeMiles12')
+        if conn.is_connected():
+            print('Connected to MySQL database')
 
-mycursor.execute("SHOW DATABASES")
+    except Error as e:
+        print(e)
 
-for x in mycursor:
-  print(x)
-# Define a list to store account information
+    finally:
+        if conn is not None and conn.is_connected():
+            conn.close()
+
+
+if __name__ == '__main__':
+    connect()
+
+
+# Define a dictionary to store account information
 accounts = {'123456': {'name': 'Gio', 'pin': '22222', 'balance': 0}}
 
 # Define functions for banking operations
